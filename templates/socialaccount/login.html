@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% load tailwind_filters %}
+{% load socialaccount %}
+{% load i18n %}
+{% load allauth %}
+ {% get_providers as socialaccount_providers %}
+    <!-- login -->
+    
+    <div class="contain py-16">
+        <div class="max-w-lg mx-auto shadow px-6 py-7 rounded overflow-hidden">
+            <h2 class="text-2xl uppercase font-medium mb-1">GOOGLE</h2>
+            <p class="text-gray-600 mb-6 text-sm">
+            </p>
+        
+
+            <!-- login with -->
+            <P class="text-lg "> {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}</P>
+
+         <p>
+            {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+        </p>
+            <div class="mt-4 flex gap-4">
+                
+              
+                <a 
+                    class="w-full py-2 text-center text-white bg-red-600 rounded uppercase font-roboto font-medium text-sm hover:bg-red-500">{% element form method="post" no_visible_fields=True %}
+        {% slot actions %}
+            {% csrf_token %}
+            {% element button type="submit" %}
+                {% trans "Continue" %}
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}</a>
+            </div>
+            <!-- ./login with -->
+
+            <p class="mt-4 text-center text-gray-600">Don't have account? <a href="{% url 'account_signup' %}"
+                    class="text-primary">Register
+                    now</a></p>
+   <p class="mt-4 text-center text-gray-600">Already have an account? <a href="{% url 'account_login' %}"
+                    class="text-primary">Login
+                    </a></p>
+
+     
+    </p>
+        </div>
+    </div>
+    <!-- ./login -->
+
+{% endblock %}
